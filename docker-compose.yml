@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  cam:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cam-capture
+    restart: unless-stopped
+    volumes:
+      - ./app:/app/app:ro
+      - ./output:/app/output
+    environment:
+      - DEBUGPY=1
+      - SNAP_INTERVAL=1
+      - CAMERA_INDEX=0
+    devices:
+      - "/dev/video0:/dev/video0"
+    group_add:
+      - "video"
+    ports:
+      - "5678:5678"
