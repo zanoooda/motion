@@ -1,0 +1,9 @@
+services:
+  motiond:
+    build: .
+    volumes:
+      - ./data:/data
+      - ./app:/app
+    devices:
+      - /dev/video0:/dev/video0
+    restart: unless-stopped
