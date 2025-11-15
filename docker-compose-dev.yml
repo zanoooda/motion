@@ -2,12 +2,13 @@ services:
   motiond:
     build:
       context: .
-      target: prod
-    image: motiond:prod
-    # command: ["python", "/app/main.py"]
+      target: dev
+    image: motiond:dev
     volumes:
       - ./data:/data
       - ./app:/app
     devices:
       - /dev/video0:/dev/video0
     restart: unless-stopped
+    ports:
+      - "5678:5678"
