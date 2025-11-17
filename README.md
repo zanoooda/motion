@@ -25,12 +25,12 @@ First, set up your configuration by creating a `.env` file as described above.
 
 ### Release
 ```bash
-docker-compose up -d
+docker compose up --build
 ```
 
 ### Debug
-1. Start the debug container:
-   ```bash
-   docker-compose -f docker-compose-debug.yml up -d
-   ```
-2. In VS Code, run the `Docker Attach` debug configuration (F5).
+```bash
+docker compose -f docker-compose-debug.yml up --build
+```
+After that, you can attach your debugger to port 5678.
+In VS Code, you can use the "Docker Attach" launch configuration.
