@@ -1,11 +1,15 @@
 
-import os, time, cv2
+import os, time, cv2, telegram, asyncio
 from datetime import datetime
+from config import MOTION_THRESHOLD, SAVE_COOLDOWN_SECONDS, OUTPUT_DIR, CAMERA_INDEX, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
 
-MOTION_THRESHOLD = int(os.getenv("MOTION_THRESHOLD", "1000"))
-SAVE_COOLDOWN_SECONDS = float(os.getenv("SAVE_COOLDOWN_SECONDS", "1.0"))
-OUTPUT_DIR = os.getenv("OUTPUT_DIR", "/data")
-CAMERA_INDEX = int(os.getenv("CAMERA_INDEX", "0"))
+async def send_telegram_message(photo_path: str, caption: str):
+    try:
+        bot = telegram.Bot(token=TELEGRAM_BOT_TOKEN)
+        await bot.send_photo(chat_id=TELEGRAM_CHAT_ID, photo=open(photo_path, 'rb'), caption=caption)
+        print("Telegram photo sent successfully.")
+    except Exception as e:
+        print(f"Failed to send telegram photo: {e}")
 
 cap = cv2.VideoCapture(CAMERA_INDEX)
 ok, frame = cap.read()
@@ -31,11 +35,12 @@ while True:
     now = time.time()
     print(f"changed={changed}")
     if changed > MOTION_THRESHOLD and (now - last_saved) >= SAVE_COOLDOWN_SECONDS:
-        ts = datetime.utcnow().strftime("%Y-%m-%d_%H-%M-%S-%f")[:-3]
+        ts = datetime.now().strftime("%Y-%m-%d_%H-%M-%S-%f")[:-3]
         path = os.path.join(OUTPUT_DIR, f"motion_{ts}.jpg")
         cv2.imwrite(path, frame)
         print(f"[motion] saved: {path} (changed={changed})")
         last_saved = now
+        asyncio.run(send_telegram_message(path, caption=f"Motion detected! Saved image: {path} (changed={changed})"))
 
     bg = gray
 

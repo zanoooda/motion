@@ -1,0 +1,9 @@
+import os
+
+MOTION_THRESHOLD = int(os.getenv("MOTION_THRESHOLD", "1000"))
+SAVE_COOLDOWN_SECONDS = float(os.getenv("SAVE_COOLDOWN_SECONDS", "1.0"))
+OUTPUT_DIR = os.getenv("OUTPUT_DIR", "/data")
+CAMERA_INDEX = int(os.getenv("CAMERA_INDEX", "0"))
+
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
