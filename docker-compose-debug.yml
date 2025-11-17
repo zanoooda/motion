@@ -14,3 +14,4 @@ services:
     restart: unless-stopped
     ports:
       - "5678:5678"
+    command:  ["watchmedo", "auto-restart", "--directory", "/app", "--pattern", "*.py", "--recursive", "--", "python", "-m", "debugpy", "--listen", "0.0.0.0:5678", "--wait-for-client", "/app/main.py"]
