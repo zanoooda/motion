@@ -1,0 +1,16 @@
+services:
+  motion:
+    build:
+      context: .
+      target: debug
+    image: motion:debug
+    env_file:
+      - .env
+    volumes:
+      - ./data:/data
+      - ./app:/app
+    devices:
+      - /dev/video0:/dev/video0
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
