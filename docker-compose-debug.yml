@@ -1,9 +1,11 @@
 services:
-  motiond:
+  motion:
     build:
       context: .
       target: debug
     image: motion:debug
+    env_file:
+      - .env
     volumes:
       - ./data:/data
       - ./app:/app

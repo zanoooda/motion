@@ -2,7 +2,12 @@
 import os, time, cv2
 from datetime import datetime
 
-cap = cv2.VideoCapture(0)
+MOTION_THRESHOLD = int(os.getenv("MOTION_THRESHOLD", "1000"))
+SAVE_COOLDOWN_SECONDS = float(os.getenv("SAVE_COOLDOWN_SECONDS", "1.0"))
+OUTPUT_DIR = os.getenv("OUTPUT_DIR", "/data")
+CAMERA_INDEX = int(os.getenv("CAMERA_INDEX", "0"))
+
+cap = cv2.VideoCapture(CAMERA_INDEX)
 ok, frame = cap.read()
 if not ok:
     raise RuntimeError("Cannot read from source")
@@ -24,9 +29,10 @@ while True:
 
     changed = cv2.countNonZero(thresh)
     now = time.time()
-    if changed > 5000 and (now - last_saved) >= 1.0:
+    print(f"changed={changed}")
+    if changed > MOTION_THRESHOLD and (now - last_saved) >= SAVE_COOLDOWN_SECONDS:
         ts = datetime.utcnow().strftime("%Y%m%d_%H%M%S_%f")[:-3]
-        path = os.path.join("/data", f"motion_{ts}.jpg")
+        path = os.path.join(OUTPUT_DIR, f"motion_{ts}.jpg")
         cv2.imwrite(path, frame)
         print(f"[motion] saved: {path} (changed={changed})")
         last_saved = now
