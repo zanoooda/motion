@@ -31,7 +31,7 @@ while True:
     now = time.time()
     print(f"changed={changed}")
     if changed > MOTION_THRESHOLD and (now - last_saved) >= SAVE_COOLDOWN_SECONDS:
-        ts = datetime.utcnow().strftime("%Y%m%d_%H%M%S_%f")[:-3]
+        ts = datetime.utcnow().strftime("%Y-%m-%d_%H-%M-%S-%f")[:-3]
         path = os.path.join(OUTPUT_DIR, f"motion_{ts}.jpg")
         cv2.imwrite(path, frame)
         print(f"[motion] saved: {path} (changed={changed})")
