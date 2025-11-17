@@ -8,7 +8,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app/ ./app
 
 FROM base AS debug
-RUN pip install --no-cache-dir debugpy
+RUN pip install --no-cache-dir debugpy watchdog
 CMD ["python","-m","debugpy","--listen","0.0.0.0:5678","--wait-for-client","/app/main.py"]
 
 FROM base AS release
