@@ -2,14 +2,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Attach motion (debugpy 5678)",
+      "name": "Docker Attach",
       "type": "debugpy",
       "request": "attach",
       "connect": { "host": "localhost", "port": 5678 },
       "pathMappings": [
         { "localRoot": "${workspaceFolder}/app", "remoteRoot": "/app" }
       ],
-      "justMyCode": true
+      "justMyCode":false
     }
   ]
 }

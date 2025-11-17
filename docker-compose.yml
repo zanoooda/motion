@@ -2,9 +2,8 @@ services:
   motiond:
     build:
       context: .
-      target: prod
-    image: motiond:prod
-    # command: ["python", "/app/main.py"]
+      target: release
+    image: motion:release
     volumes:
       - ./data:/data
       - ./app:/app

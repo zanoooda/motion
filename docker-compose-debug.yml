@@ -2,8 +2,8 @@ services:
   motiond:
     build:
       context: .
-      target: dev
-    image: motiond:dev
+      target: debug
+    image: motion:debug
     volumes:
       - ./data:/data
       - ./app:/app
