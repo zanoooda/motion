@@ -3,3 +3,5 @@ telegram
 windows
 
 numpy ?
+
+tests
