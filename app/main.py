@@ -1,16 +1,8 @@
 
-import os, time, cv2, telegram
+import os, time, cv2
 from datetime import datetime
 from config import MOTION_THRESHOLD, SAVE_COOLDOWN_SECONDS, OUTPUT_DIR, CAMERA_INDEX, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
 from notifiers.telegram import TelegramNotifier
-
-async def send_telegram_message(photo_path: str, caption: str):
-    try:
-        bot = telegram.Bot(token=TELEGRAM_BOT_TOKEN)
-        await bot.send_photo(chat_id=TELEGRAM_CHAT_ID, photo=open(photo_path, 'rb'), caption=caption)
-        print("Telegram photo sent successfully.")
-    except Exception as e:
-        print(f"Failed to send telegram photo: {e}")
 
 cap = cv2.VideoCapture(CAMERA_INDEX)
 ok, frame = cap.read()
